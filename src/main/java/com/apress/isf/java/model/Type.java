@@ -5,6 +5,11 @@ public class Type {
     private String desc;
     private String extension;
 
+    @Override
+    public String toString() {
+        return "Type{" + "name='" + name + '\'' + '}';
+    }
+
     public String getName() {
         return name;
     }

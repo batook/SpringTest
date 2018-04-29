@@ -25,6 +25,11 @@ public class Document {
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return "Document{" + "name='" + name + '\'' + ", type=" + type + '}';
+    }
+
     public String getLocation() {
         return location;
     }

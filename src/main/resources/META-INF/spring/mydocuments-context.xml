@@ -6,10 +6,23 @@
         <property name="documentDAO" ref="documentDAO"/>
     </bean>
     <bean id="documentDAO" class="com.apress.isf.spring.data.DocumentRepository">
-        <property name="doc1" ref="doc1"/>
-        <property name="doc2" ref="doc2"/>
-        <property name="doc3" ref="doc3"/>
-        <property name="doc4" ref="doc4"/>
+        <property name="documents">
+            <list>
+                <ref bean="doc1"/>
+                <ref bean="doc2"/>
+                <ref bean="doc3"/>
+                <ref bean="doc4"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="typeDAO" class="com.apress.isf.spring.data.TypeDataRepository">
+        <property name="types">
+            <map>
+                <entry key="webType" value-ref="webType"/>
+                <entry key="pdfType" value-ref="pdfType"/>
+                <entry key="noteType" value-ref="noteType"/>
+            </map>
+        </property>
     </bean>
     <bean id="doc1" class="com.apress.isf.java.model.Document">
         <property name="name" value="Book Template"/>
