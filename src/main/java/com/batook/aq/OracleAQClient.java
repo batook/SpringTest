@@ -4,7 +4,7 @@ ojdbc6.jar
 jmscommon.jar
 aqapi.jar
 javax.jms-api.jar
-jta-api.jar
+jta-spec1_0_1.jar
 */
 
 import oracle.AQ.AQQueueTable;
