@@ -20,6 +20,7 @@ public class OraTest {
     public void dummy() {
         assertNotNull(repository);
         assertEquals("X", repository.getDummy());
+        assertEquals("X", repository.getDummyRS());
     }
 
 }
