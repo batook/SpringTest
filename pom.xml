@@ -3,17 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>groupId</groupId>
     <artifactId>SpringTest</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.10.RELEASE</version>
     </parent>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -80,21 +77,63 @@
             <version>1.4.196</version>
             <scope>test</scope>
         </dependency>
-
-
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>1.10.7.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.0</version>
+        </dependency>
     </dependencies>
-
     <properties>
         <java.version>1.8</java.version>
     </properties>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.13.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <schemaLanguage>WSDL</schemaLanguage>
+                    <generatePackage>cbr.wsdl</generatePackage>
+                    <forceRegenerate>true</forceRegenerate>
+                    <schemas>
+                        <schema>
+                            <url>DailyInfo.wsdl</url>
+                        </schema>
+                    </schemas>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 </project>
+

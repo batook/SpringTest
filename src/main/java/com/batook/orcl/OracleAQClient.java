@@ -1,4 +1,4 @@
-package com.batook.aq;
+package com.batook.orcl;
 /*
 ojdbc6.jar
 jmscommon.jar

@@ -1,34 +1,34 @@
+/**
+ * 
+ */
 package com.apress.isf.spring.data;
-
-import com.apress.isf.java.model.Type;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class TypeDataRepository implements TypeDataDAO {
-    private static final Logger log = LoggerFactory.getLogger(TypeDataRepository.class);
-    private Map<String, Type> types = null;
+import com.apress.isf.java.model.Type;
 
-    public Map<String, Type> getTypes() {
-        return types;
-    }
 
-    public void setTypes(Map<String, Type> types) {
-        this.types = types;
-    }
+/**
+ * @author Felipe Gutierrez
+ *
+ */
+public class TypeDataRepository implements TypeDataDAO{
+	private Map<String,Type> types = null;
+	
+	public Map<String, Type> getTypes() {
+		return types;
+	}
 
-    public Type findById(String id) {
-        if (log.isDebugEnabled()) log.debug("Start <findById> Params: " + id);
+	public void setTypes(Map<String, Type> types) {
+		this.types = types;
+	}
 
-        Type type = types.get(id);
+	public Type findById(String id){
+		Type type = types.get(id);
+		return type;
+	}
 
-        if (log.isDebugEnabled()) log.debug("End <findById> Params: " + type);
-        return type;
-    }
-
-    public Type[] getAll() {
-        return types.values().toArray(new Type[types.values().size()]);
-    }
+	public Type[] getAll() {		
+		return types.values().toArray(new Type[types.values().size()]);
+	}
 }
-
