@@ -1,5 +1,6 @@
 package com.batook.media.data;
 
+import com.batook.media.service.ItemListService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,8 +33,8 @@ public class OraConfig {
     }
 
     @Bean
-    public MediaRepository oraRepository(JdbcTemplate jdbcTemplate) {
-        return new JdbcMediaRepository(jdbcTemplate);
+    public MediaRepository oraRepository() {
+        return new JdbcMediaRepository();
     }
 
     @Bean
@@ -41,6 +42,10 @@ public class OraConfig {
         return new DataSourceTransactionManager(dataSource);
     }
 
+    @Bean
+    public ItemListService itemList() {
+        return new ItemListService();
+    }
 
 }
 

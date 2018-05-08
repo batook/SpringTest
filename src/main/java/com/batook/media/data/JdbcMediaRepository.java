@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -24,14 +25,14 @@ public class JdbcMediaRepository implements MediaRepository {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public JdbcMediaRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    }
+
+    public SqlRowSet getGoodsResultSet() {
+        return this.jdbcTemplate.queryForRowSet("select " + GOODS_COLUMNS + " from GOODS");
     }
 
     public List<Goods> getGoodsList() {
@@ -96,62 +97,6 @@ public class JdbcMediaRepository implements MediaRepository {
             return track;
         }
     }
-
-/*
-    public List<Item> getItems() throws SQLException {
-        List<Item> items = new ArrayList<>();
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("select ITEMID,TITLE,COVER_PATH,DESCRIPTION,VIDEO_PATH,MEDIA_TYPE,GENRE,IS_HIT from GOODS");
-        PreparedStatement ps1 = conn.prepareStatement("select distinct DISK from GOODS_DETAIL where ITEMID=?");
-        PreparedStatement ps2 = conn.prepareStatement("select TRACK,NAME,PATH from GOODS_DETAIL where ITEMID=? and DISK=?");
-        PreparedStatement ps3 = conn.prepareStatement("select BARCODE from GOODS_BARCODES where ITEMID=?");
-        while (rs.next()) {
-            Item item = new Item();
-            item.setId(rs.getString(1));
-            item.setTitle(rs.getString(2));
-            item.setCoverPath(rs.getString(3));
-            item.setDescription(rs.getString(4));
-            item.setVideoPath(rs.getString(5));
-            item.setType(rs.getString(6));
-            item.setGenre(rs.getString(7));
-            item.setHit(rs.getString(8));
-            ps1.setString(1, rs.getString(1));
-            ResultSet rs1 = ps1.executeQuery();
-            while (rs1.next()) {
-                Disk disk = new Disk();
-                List<Track> tracks = new ArrayList<>();
-                disk.setNumber(rs1.getString(1));
-                ps2.setString(1, rs.getString(1));
-                ps2.setString(2, rs1.getString(1));
-                ResultSet rs2 = ps2.executeQuery();
-                while (rs2.next()) {
-                    Track track = new Track();
-                    track.setNumber(rs2.getString(1));
-                    track.setName(rs2.getString(2));
-                    track.setPath(rs2.getString(3));
-                    tracks.add(track);
-                }
-                disk.setTracks(tracks);
-                item.setDisk(disk);
-            }
-            List<Barcode> barcodes = new ArrayList<>();
-            ps3.setString(1, rs.getString(1));
-            ResultSet rs3 = ps3.executeQuery();
-            while (rs3.next()) {
-                Barcode barcode = new Barcode();
-                barcode.setBarcode(rs3.getString(1));
-                barcodes.add(barcode);
-            }
-            item.setBarcodes(barcodes);
-            items.add(item);
-        }
-        ps3.close();
-        ps2.close();
-        ps1.close();
-        st.close();
-        return items;
-    }
-    */
 }
 
 
