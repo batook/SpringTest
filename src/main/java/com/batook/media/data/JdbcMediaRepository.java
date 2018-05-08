@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class JdbcMediaRepository implements MediaRepository {
+public class JdbcMediaRepository implements JdbcRepository {
     private static final String GOODS_COLUMNS = "ITEMID,TITLE,COVER_PATH,DESCRIPTION,VIDEO_PATH,MEDIA_TYPE,GENRE,IS_HIT";
 
     private JdbcTemplate jdbcTemplate;

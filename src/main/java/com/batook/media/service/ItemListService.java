@@ -1,6 +1,6 @@
 package com.batook.media.service;
 
-import com.batook.media.data.MediaRepository;
+import com.batook.media.data.JdbcRepository;
 import com.batook.media.model.Barcode;
 import com.batook.media.model.Disk;
 import com.batook.media.model.Item;
@@ -16,12 +16,12 @@ import java.util.List;
 @Service
 public class ItemListService {
     @Autowired
-    MediaRepository repository;
+    JdbcRepository repository;
 
     public ItemListService() {
     }
 
-    public ItemListService(MediaRepository repository) {
+    public ItemListService(JdbcRepository repository) {
         this.repository = repository;
     }
 

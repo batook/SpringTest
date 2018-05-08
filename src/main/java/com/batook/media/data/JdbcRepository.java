@@ -8,7 +8,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import java.util.List;
 import java.util.Map;
 
-public interface MediaRepository {
+public interface JdbcRepository {
     public SqlRowSet getGoodsResultSet();
 
     public List<Goods> getGoodsList();

@@ -33,7 +33,7 @@ public class OraConfig {
     }
 
     @Bean
-    public MediaRepository oraRepository() {
+    public JdbcRepository oraRepository() {
         return new JdbcMediaRepository();
     }
 
