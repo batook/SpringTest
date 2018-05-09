@@ -16,6 +16,7 @@ public class MongoConfig {
         MongoClient client = null;
         MongoClientURI uri = new MongoClientURI("mongodb://batook:gfhjdjp@cluster0-shard-00-00-739ig.mongodb.net:27017,cluster0-shard-00-01-739ig.mongodb" + ".net:27017,cluster0-shard-00-02-739ig.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
         client = new MongoClient(uri);
+        //client = new MongoClient("192.168.1.20", 27017);
         return client;
     }
 
