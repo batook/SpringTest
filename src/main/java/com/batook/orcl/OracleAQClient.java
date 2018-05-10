@@ -149,8 +149,8 @@ public class OracleAQClient {
         String queue = "sample_aq";
         String qTable = "sample_aqtbl";
         //createQueue(userName, qTable, queue);
-        //sendMessage(userName, queue,"<user>text</user>");
-        //browseMessage(userName, queue);
+        sendMessage(userName, queue,"<user>text</user>");
+        browseMessage(userName, queue);
         consumeMessage(userName, queue);
     }
 }

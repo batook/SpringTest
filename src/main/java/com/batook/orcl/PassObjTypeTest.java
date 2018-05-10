@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class Test {
+public class PassObjTypeTest {
     public static void main(String[] args) throws SQLException {
         Locale.setDefault(Locale.ENGLISH);
         DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
@@ -20,6 +20,12 @@ public class Test {
         System.out.println(arrayDesc.descType());
     }
 }
+
+// create or replace type RECTYPE as object (cnumber number,
+//                                           cvarchar varchar2(32 char),
+//                                           cdate date);
+// create or replace type RECTAB as table of RECTYPE;
+// procedure TESTPROC (iorec in out RECTAB, orec out RECTAB);
 
 class CallableStructArray {
 
@@ -69,10 +75,8 @@ class CallableStructArray {
         // Выполнение процедуры
         cst.execute();
 
-        // Ассоциация возвращаемого массива с объектом ARRAY.
-        array = cst.getARRAY(1);
-
         // Получение данных первого параметра.
+        array = cst.getARRAY(1);
         Object[] objects = (Object[]) array.getArray();
         System.out.println("\nПервый объект:");
         for (Object object : objects) {
