@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -19,10 +20,12 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
+@Transactional
 public class JdbcMediaRepository implements JdbcRepository {
     private static final String GOODS_COLUMNS = "ITEMID,TITLE,COVER_PATH,DESCRIPTION,VIDEO_PATH,MEDIA_TYPE,GENRE,IS_HIT";
 
     private JdbcTemplate jdbcTemplate;
+
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
@@ -37,6 +40,9 @@ public class JdbcMediaRepository implements JdbcRepository {
 
     public List<Goods> getGoodsList() {
         return this.jdbcTemplate.query("select " + GOODS_COLUMNS + " from GOODS", new GoodsRowMapper());
+    }
+    public List<Barcode> getBarcodeList() {
+        return this.jdbcTemplate.query("select BARCODE from GOODS_BARCODES", new BarcodeRowMapper());
     }
 
     public List<Map<String, Object>> getList() {

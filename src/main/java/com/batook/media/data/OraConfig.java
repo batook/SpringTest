@@ -2,6 +2,7 @@ package com.batook.media.data;
 
 import com.batook.media.service.ItemListService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -14,6 +15,7 @@ import java.util.Locale;
 
 @Configuration
 @EnableTransactionManagement
+@ComponentScan(basePackages = "com.batook.media")
 public class OraConfig {
 
     @Bean
@@ -28,24 +30,8 @@ public class OraConfig {
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
-    }
-
-    @Bean
-    public JdbcRepository oraRepository() {
-        return new JdbcMediaRepository();
-    }
-
-    @Bean
     public PlatformTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
-
-    @Bean
-    public ItemListService itemList() {
-        return new ItemListService();
-    }
-
 }
 

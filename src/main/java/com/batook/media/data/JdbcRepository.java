@@ -17,6 +17,8 @@ public interface JdbcRepository {
 
     public List<Barcode> getBarcodeListByItemId(String itemId);
 
+    public List<Barcode> getBarcodeList();
+
     public List<String> getDiskListByItemId(String itemId);
 
     public List<Track> getTrackListByItemIdAndDiskNumber(String itemId, String diskNumber);
