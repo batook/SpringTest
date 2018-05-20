@@ -14,7 +14,7 @@ public class MongoConfig {
     @Bean
     public MongoClient getMongoClient() {
         MongoClient client = null;
-        MongoClientURI uri = new MongoClientURI("mongodb://batook:gfhjdjp@cluster0-shard-00-00-739ig.mongodb.net:27017,cluster0-shard-00-01-739ig.mongodb" + ".net:27017,cluster0-shard-00-02-739ig.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
+        MongoClientURI uri = new MongoClientURI("mongodb://batook:gfhjdjp@cluster0-shard-00-00-739ig.mongodb.net:27017,cluster0-shard-00-01-739ig.mongodb.net:27017,cluster0-shard-00-02-739ig.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
         client = new MongoClient(uri);
         return client;
     }

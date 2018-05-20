@@ -8,7 +8,18 @@ import com.batook.media.model.Track;
 import com.batook.media.service.ItemListService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Projections;
+import com.mongodb.util.JSON;
+import org.bson.Document;
+import org.bson.codecs.DocumentCodec;
+import org.bson.codecs.EncoderContext;
+import org.bson.conversions.Bson;
+import org.bson.json.JsonMode;
+import org.bson.json.JsonWriter;
+import org.bson.json.JsonWriterSettings;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -22,7 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -47,12 +60,21 @@ public class MediaTest {
     @Autowired
     BarcodeRepository barcodeRepository;
 
+    private static void printJson(Document doc) {
+        JsonWriter writer = new JsonWriter(new StringWriter(), new JsonWriterSettings(JsonMode.SHELL, false));
+        new DocumentCodec().encode(writer, doc, EncoderContext.builder()
+                                                              .isEncodingCollectibleDocument(true)
+                                                              .build());
+        System.out.println(writer.getWriter());
+        writer.flush();
+    }
 
     @Before
     public void drop() {
         mongoOps = new MongoTemplate(mongo, "MediaDB");
     }
 
+    @Ignore
     @Test
     public void testMongo() {
         assertNotNull(mongo);
@@ -61,6 +83,10 @@ public class MediaTest {
         itemRepository.save(new Item("12345"));
         assertEquals(1, mongoOps.getCollection("item")
                                 .count());
+        List<DBObject> myList = mongoOps.getCollection("item")
+                                        .find()
+                                        .toArray();
+        System.out.println(myList);
         assertNotNull(itemRepository.findById("12345"));
         long startTime = System.nanoTime();
         List<Item> itemList = itemListService.getItemList();
@@ -94,24 +120,34 @@ public class MediaTest {
                                      .create();
         try (FileWriter writer = new FileWriter("ItemList.json");) {
             gson.toJson(itemList, writer);
+            writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Test
     public void testJson() throws IOException {
-        // mongoOps.dropCollection("barcode");
-        // List<Barcode> list = repository.getBarcodeList();
-        // System.out.println(list.size());
-        // barcodeRepository.save(list);
-        List<Barcode> list2 = barcodeRepository.findAll();
-        System.out.println(list2.size());
-        String jsonStr = new Gson().toJson(list2);
-        System.out.println(jsonStr);
+        List<DBObject> myList = mongoOps.getCollection("item")
+                                        .find()
+                                        .toArray();
+        //System.out.println(myList);
+        //String json = JSON.serialize(myList);
+        String json = JSON.serialize(myList.get(1));
+        //String json = new Gson().toJson(myList);
+        //System.out.println(json);
+        MongoCollection<Document> collection = mongo.getDatabase("MediaDB")
+                                                    .getCollection("item");
+        Bson projection = Projections.excludeId();
+        collection.find()
+                  .projection(projection)
+                  .limit(10)
+                  .into(new ArrayList<Document>())
+                  .forEach(MediaTest::printJson);
+
     }
 
-    @Ignore
     @Test
     @Transactional
     public void testOrcl() {
