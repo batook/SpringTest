@@ -13,10 +13,12 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Projections;
 import com.mongodb.util.JSON;
+import org.bson.BsonBinaryWriter;
 import org.bson.Document;
 import org.bson.codecs.DocumentCodec;
 import org.bson.codecs.EncoderContext;
 import org.bson.conversions.Bson;
+import org.bson.io.BasicOutputBuffer;
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriter;
 import org.bson.json.JsonWriterSettings;
@@ -59,6 +61,15 @@ public class MediaTest {
 
     @Autowired
     BarcodeRepository barcodeRepository;
+
+    private static byte[] mongoDocumentToByteArray(Document mongoDocument) {
+        BasicOutputBuffer outputBuffer = new BasicOutputBuffer();
+        BsonBinaryWriter writer = new BsonBinaryWriter(outputBuffer);
+        new DocumentCodec().encode(writer, mongoDocument, EncoderContext.builder()
+                                                                        .isEncodingCollectibleDocument(true)
+                                                                        .build());
+        return outputBuffer.toByteArray();
+    }
 
     private static void printJson(Document doc) {
         JsonWriter writer = new JsonWriter(new StringWriter(), new JsonWriterSettings(JsonMode.SHELL, false));
@@ -127,7 +138,7 @@ public class MediaTest {
 
     }
 
-    @Test
+    @Test(timeout = 1000L)
     public void testJson() throws IOException {
         List<DBObject> myList = mongoOps.getCollection("item")
                                         .find()
