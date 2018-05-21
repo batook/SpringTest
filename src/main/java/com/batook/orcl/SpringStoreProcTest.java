@@ -26,7 +26,7 @@ import java.util.Map;
 //end;
 
 
-class OrclStoreProc {
+public class SpringStoreProcTest {
     public static void main(String[] args) {
         EmployeeObj emp = new EmployeeObj("TEST_EMP_OBJ", 234, "hello");
         EmployeeObj emp1 = new EmployeeObj("TEST_EMP_OBJ", 235, "bye");
