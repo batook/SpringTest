@@ -85,6 +85,5 @@ class EmployeeObj implements SQLData {
     public void writeSQL(SQLOutput stream) throws SQLException {
         stream.writeInt(empNo);
         stream.writeString(empName);
-
     }
 }
