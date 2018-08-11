@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>groupId</groupId>
+    <groupId>com.batook</groupId>
     <artifactId>SpringTest</artifactId>
     <version>1.0-SNAPSHOT</version>
     <parent>
@@ -27,24 +27,11 @@
             <artifactId>spring-context</artifactId>
             <version>4.3.14.RELEASE</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>1.8.13</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>4.3.14.RELEASE</version>
             <scope>compile</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.github.stefanbirkner/system-rules -->
-        <dependency>
-            <groupId>com.github.stefanbirkner</groupId>
-            <artifactId>system-rules</artifactId>
-            <version>1.17.1</version>
-            <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
@@ -74,6 +61,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>4.12</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb -->
         <dependency>
@@ -91,24 +79,20 @@
             <groupId>org.springframework.ws</groupId>
             <artifactId>spring-ws-core</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-core -->
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-core</artifactId>
-            <version>5.7.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jms -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jms</artifactId>
-            <version>4.3.14.RELEASE</version>
-        </dependency>
     </dependencies>
     <properties>
         <java.version>1.8</java.version>
     </properties>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
