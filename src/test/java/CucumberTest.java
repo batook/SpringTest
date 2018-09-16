@@ -4,6 +4,10 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/features", glue = "steps", tags = "@all", plugin = {"pretty", "html:target/cucumber"}, monochrome = true)
+@CucumberOptions(features = "src/test/resources/features",
+                 glue = "steps",
+                 tags = "@all",
+                 plugin = {"pretty", "html:target/cucumber"},
+                 monochrome = false)
 public class CucumberTest {
 }

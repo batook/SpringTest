@@ -1,22 +1,17 @@
 package com.batook.mongo;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-@SpringBootApplication
-public class Application implements CommandLineRunner {
-
-	@Autowired
-	private CustomerRepository repository;
-
+public class Application {
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		ApplicationContext context = new AnnotationConfigApplicationContext(MongoConfig.class);
+		CustomerRepository repository=context.getBean(CustomerRepository.class);
+
+		new Application().run(repository);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
+	public void run(CustomerRepository repository)  {
 
 		repository.deleteAll();
 

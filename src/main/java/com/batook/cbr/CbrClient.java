@@ -5,18 +5,21 @@ import com.batook.cbr.client.DailyInfoSoap;
 import com.batook.cbr.client.EnumReutersValutesXMLResponse;
 import com.batook.cbr.client.GetCursOnDateXMLResponse;
 import com.google.gson.Gson;
+import org.apache.log4j.Logger;
 
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.GregorianCalendar;
 
+
 /**
  * http://www.cbr.ru/development/DWS/
- *
+ * <p>
  * wsimport -s src/main/java/ -p com.batook.cbr.client -Xnocompile DailyInfo.wsdl
- *
  */
 public class CbrClient {
+    public static final Logger log = Logger.getLogger(CbrClient.class);
+
     public static void main(String[] args) {
         try {
             read();
@@ -70,7 +73,7 @@ public class CbrClient {
 
         EnumReutersValutesXMLResponse.EnumReutersValutesXMLResult rv = service.enumReutersValutesXML();
         java.util.List<Object> o = rv.getContent();
-        System.out.println(o);
+        log.info(o);
 
     }
 }

@@ -15,6 +15,7 @@ public class Client extends WebServiceGatewaySupport {
         GetCursOnDateXML request = new GetCursOnDateXML();
         request.getOnDate();
 
+        log.info("request {}",request);
         GetCursOnDateXMLResponse response = (GetCursOnDateXMLResponse) getWebServiceTemplate().marshalSendAndReceive(request);
         return response;
     }
