@@ -22,9 +22,10 @@ public class OraDaoConfig {
         Locale.setDefault(Locale.ENGLISH);
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("oracle.jdbc.OracleDriver");
-        ds.setUrl("jdbc:oracle:thin:batook/gfhjdjp@192.168.1.20:1521/xe");
-        ds.setUsername("batook");
-        ds.setPassword("gfhjdjp");
+//        ds.setUrl("jdbc:oracle:thin:batook/gfhjdjp@192.168.1.20:1521/xe");
+//        ds.setUsername("batook");
+//        ds.setPassword("gfhjdjp");
+        ds.setUrl("jdbc:oracle:thin:batook/batook@192.168.1.24:1521/xe");
         return ds;
     }
 /*
