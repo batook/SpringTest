@@ -25,7 +25,7 @@ public class OraDaoConfig {
 //        ds.setUrl("jdbc:oracle:thin:batook/gfhjdjp@192.168.1.20:1521/xe");
 //        ds.setUsername("batook");
 //        ds.setPassword("gfhjdjp");
-        ds.setUrl("jdbc:oracle:thin:batook/batook@192.168.1.24:1521/xe");
+        ds.setUrl("jdbc:oracle:thin:batook/batook@127.0.0.1:1521/xe");
         return ds;
     }
 /*

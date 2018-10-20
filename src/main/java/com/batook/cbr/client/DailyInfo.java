@@ -32,7 +32,7 @@ public class DailyInfo
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/Users/batook/IdeaProjects/SpringTest/DailyInfo.wsdl");
+            url = new URL("file:./DailyInfo.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
