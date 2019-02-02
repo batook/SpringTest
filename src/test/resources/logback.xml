@@ -2,7 +2,7 @@
 <configuration>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) [%thread] [%logger{36}.%M:%line] - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
     <root>
@@ -10,4 +10,6 @@
         <appender-ref ref="CONSOLE"/>
     </root>
     <logger name="com.batook" level="TRACE"/>
+    <logger name="orders" level="TRACE"/>
+    <logger name="steps" level="TRACE"/>
 </configuration>
