@@ -7,17 +7,22 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.concurrent.ConcurrentMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/context.xml")
 public class TestCacheTest {
 
     private static final Logger logger = LoggerFactory.getLogger(TestCacheTest.class);
-
+    @Autowired
+    CacheManager cacheManager;
     @Autowired
     private PersonRepository personRepository;
 
@@ -33,11 +38,24 @@ public class TestCacheTest {
         findCacheByName("Сергей");
         findCacheByName("Иван");
         personRepository.findCacheByName("Иван");
+        personRepository.checkCache();
+        personRepository.clearCache("person");
+        checkCache();
     }
 
     private Person findCacheByName(String name) {
         final Person person = personRepository.findCacheByName(name);
         logger.info("find result = {}", person);
         return person;
+    }
+
+    private void checkCache() {
+        Collection<String> cacheList = cacheManager.getCacheNames();
+        for (String s : cacheList) {
+            Cache c = cacheManager.getCache(s);
+            //Return the the underlying native cache provider (ConcurrentMapCache)
+            ConcurrentMap<Object, Object> store = (ConcurrentMap<Object, Object>) c.getNativeCache();
+            logger.info("cache {} = {}", s, store.entrySet());
+        }
     }
 }
