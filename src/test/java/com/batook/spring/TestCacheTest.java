@@ -21,8 +21,10 @@ import java.util.concurrent.ConcurrentMap;
 public class TestCacheTest {
 
     private static final Logger logger = LoggerFactory.getLogger(TestCacheTest.class);
+
     @Autowired
-    CacheManager cacheManager;
+    private CacheManager cacheManager;
+
     @Autowired
     private PersonRepository personRepository;
 
@@ -41,6 +43,8 @@ public class TestCacheTest {
         personRepository.checkCache();
         personRepository.clearCache("person");
         checkCache();
+        logger.info("{}", personRepository.findCacheByName("Иван"));
+        logger.info("{}", personRepository.findCacheByName("Иван"));
     }
 
     private Person findCacheByName(String name) {
