@@ -18,15 +18,22 @@ import java.util.concurrent.ConcurrentMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/context.xml")
-public class TestCacheTest {
+public class TestCache {
 
-    private static final Logger logger = LoggerFactory.getLogger(TestCacheTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(TestCache.class);
 
-    @Autowired
     private CacheManager cacheManager;
+    private PersonRepository personRepository;
 
     @Autowired
-    private PersonRepository personRepository;
+    public void setCacheManager(CacheManager cm) {
+        this.cacheManager = cm;
+    }
+
+    @Autowired
+    public void setPersonRepository(PersonRepository repository) {
+        this.personRepository = repository;
+    }
 
     @Before
     public void before() {
