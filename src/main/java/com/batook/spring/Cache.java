@@ -9,29 +9,43 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
+import static java.nio.file.StandardOpenOption.DELETE_ON_CLOSE;
+
 public class Cache {
-    public static final Logger log = LoggerFactory.getLogger(Cache.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Cache.class);
     static PersonRepository repository;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        System.setProperty("spring.profiles.active", "dev");
         ApplicationContext ctx = new ClassPathXmlApplicationContext("context.xml");
-        log.info(">>> {}", ctx);
+        //        ((ConfigurableEnvironment)ctx.getEnvironment()).setActiveProfiles("dev");
+        //        ((ClassPathXmlApplicationContext) ctx).refresh();
+        System.getProperties()
+              .storeToXML(new FileOutputStream("Properties.xml"), "Properties");
+        LOGGER.info("CLASSPATH: {}", ctx.getEnvironment().getProperty("java.class.path"));
+        LOGGER.info(">>> {}", ctx.getEnvironment());
         repository = (PersonRepository) ctx.getBean("personRepository");
         repository.initPersons(Arrays.asList(new Person("Иван", 22), new Person("Сергей", 34), new Person("Игорь", 41)));
-        log.info(">>> {}", repository.findCacheByName("Иван"));
-        log.info(">>> {}", repository.findCacheByName("Сергей"));
-        log.info(">>> {}", repository.findCacheByName("Сергей"));
-        log.info(">>> {}", repository.findCacheByName("Иван"));
+        LOGGER.info(">>> {}", repository.findCacheByName("Иван"));
+        LOGGER.info(">>> {}", repository.findCacheByName("Сергей"));
+        LOGGER.info(">>> {}", repository.findCacheByName("Сергей"));
+        LOGGER.info(">>> {}", repository.findCacheByName("Иван"));
     }
 
 }
 
 class PersonRepository {
 
-    private static final Logger logger = LoggerFactory.getLogger(PersonRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonRepository.class);
 
     private CacheManager cacheManager;
     private List<Person> persons = new ArrayList<>();
@@ -64,7 +78,7 @@ class PersonRepository {
 
     @Cacheable(cacheNames = "person")
     public Person findCacheByName(String name) {
-        logger.info("finding person ... {}", name);
+        LOGGER.info("finding person ... {}", name);
         return findByName(name);
     }
 
@@ -74,13 +88,13 @@ class PersonRepository {
             org.springframework.cache.Cache c = cacheManager.getCache(s);
             //Return the the underlying native cache provider (ConcurrentMapCache)
             ConcurrentMap<Object, Object> store = (ConcurrentMap<Object, Object>) c.getNativeCache();
-            logger.info("cache {} = {}", s, store.entrySet());
+            LOGGER.info("cache {} = {}", s, store.entrySet());
         }
     }
 
     public void clearCache(String name) {
         org.springframework.cache.Cache c = cacheManager.getCache(name);
-        logger.info("Clearing cache {} size={}", name, ((Map) c.getNativeCache()).size());
+        LOGGER.info("Clearing cache {} size={}", name, ((Map) c.getNativeCache()).size());
         c.clear();
     }
 }
