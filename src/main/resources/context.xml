@@ -13,4 +13,11 @@
     <beans profile="dev">
         <bean id="personRepository" class="com.batook.spring.PersonRepository" scope="singleton"/>
     </beans>
+    <beans profile="default">
+        <bean id="myBean" class="com.batook.spring.MyBean"/>
+        <bean id="factoryMethodBean" class="com.batook.spring.StaticFactoryMethod" factory-method="getInstance"/>
+        <bean id="serviceLocator" class="com.batook.spring.InstanceFactoryMethod"/>
+        <bean id="instanceFactory" factory-bean="serviceLocator" factory-method="createMyBean"/>
+        <bean id="instanceFactory2" factory-bean="serviceLocator" factory-method="createMyBean2"/>
+    </beans>
 </beans>
